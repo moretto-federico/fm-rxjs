@@ -2,9 +2,10 @@
   "name": "fm-rxjs",
   "version": "1.0.0",
   "description": "A re-implementation of the rxjs library",
-  "main": "src/index.js",
+  "main": "dist/@fm/rxjs.js",
+  "module": "src/index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "test": "jest"
   },
   "keywords": [
@@ -13,6 +14,7 @@
   ],
   "author": "moretto.federico@gmail.com",
   "license": "ISC",
+  "peerDependency": {},
   "devDependencies": {
     "@babel/core": "^7.7.4",
     "@babel/plugin-proposal-class-properties": "^7.7.4",

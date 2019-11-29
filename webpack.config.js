@@ -3,7 +3,9 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].js'
+    filename: '@fm/rxjs.js',
+    library: '@fm/rxjs',
+    libraryTarget: 'umd',
   },
   module: {
     rules: [
@@ -16,5 +18,6 @@ module.exports = {
   stats: {
     colors: true
   },
+  externals: {},
   devtool: 'source-map'
 };
