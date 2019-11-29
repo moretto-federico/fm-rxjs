@@ -1,5 +1,6 @@
 import { Subscription } from "../Subscription";
 import { Subscriber } from "../Subscriber";
+import { Observer } from "../Observer";
 
 /**
  * Emit the last value.
@@ -8,19 +9,17 @@ import { Subscriber } from "../Subscriber";
 export default function last() {
   return (observable) => {
     return {
-      subscribe: (obs) => {
+      subscribe: (observer) => {
         let history = null;
-        const subscriber = {
-          ...obs,
+        return observable.subscribe(Observer.merge(observer, {
           completed: () => {
-            if (history) obs.next(history.value);
-            obs.completed();
+            if (history) observer.next(history.value);
+            observer.completed();
           },
           next: (value) => {
             history = { value };
           },
-        };
-        return observable.subscribe(subscriber);
+        }));
       }
     }
   }

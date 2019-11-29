@@ -13,7 +13,7 @@ export class Subscription {
     this.teardowns.push(teardown);
   }
 
-  unsubscribe() {
+  unsubscribe = () => {
     this.teardowns.forEach((teardown) => teardown());
   }
 }

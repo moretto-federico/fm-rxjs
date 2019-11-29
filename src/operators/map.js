@@ -1,3 +1,4 @@
+import { Observer } from "../Observer"
 
 /**
  * Call func for each value emitted.
@@ -6,12 +7,10 @@
 export default function map(func) {
   return (observable) => {
     return {
-      subscribe: (obs) => {
-        const observer = {
-          ...obs,
-          next: (value) => obs.next(func(value)),
-        }
-        return observable.subscribe(observer);
+      subscribe: (observer) => {
+        return observable.subscribe(Observer.merge(observer, {
+          next: (value) => observer.next(func(value)),
+        }));
       }
     }
   }

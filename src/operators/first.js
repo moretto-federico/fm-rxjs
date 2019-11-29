@@ -1,5 +1,6 @@
 import { Subscription } from "../Subscription";
 import { Subscriber } from "../Subscriber";
+import { Observer } from "../Observer";
 
 /**
  * Emit the first value.
@@ -8,16 +9,15 @@ import { Subscriber } from "../Subscriber";
 export default function first() {
   return (observable) => {
     return {
-      subscribe: (obs) => {
+      subscribe: (observer) => {
         const subscription = new Subscription();
-        const subscriber = new Subscriber({
-          ...obs,
+        const subscriber = new Subscriber(Observer.merge(observer, {
           next: (value) => {
             subscription.unsubscribe();
-            obs.next(value);
-            obs.completed();
+            observer.next(value);
+            observer.completed();
           },
-        }, subscription);
+        }), subscription);
         subscription.add(observable.subscribe(subscriber));
         return subscription;
       }

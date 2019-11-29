@@ -1,17 +1,17 @@
 import { Observable } from "../Observable";
 import { Subscription } from "../Subscription";
+import { Observer } from "../Observer";
 
 class MergeObservable extends Observable {
   constructor(observables) {
-    super(() => { });
+    super();
     this.observables = observables;
   }
 
   subscribe(observer) {
     const subscription = new Subscription();
     this.observables.forEach(observable => {
-      const s = observable.subscribe({
-        next: (value) => observer.next(value),
+      const s = observable.subscribe(Observer.merge(observer, {
         error: (err) => {
           subscription.unsubscribe();
           observer.error(err);
@@ -20,8 +20,8 @@ class MergeObservable extends Observable {
           subscription.unsubscribe();
           observer.completed();
         },
-      });
-      subscription.add(s.unsubscribe.bind(s));
+      }));
+      subscription.add(s.unsubscribe);
     });
     return subscription;
   }
