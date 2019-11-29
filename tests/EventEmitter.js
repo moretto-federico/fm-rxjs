@@ -2,7 +2,7 @@
 export class EventEmitter {
   add(observer) {
     this.observer = observer;
-    return () => this.observer = null;
+    return () => { };
   }
 
   emit(event) {

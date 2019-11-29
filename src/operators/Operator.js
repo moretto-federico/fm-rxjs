@@ -1,9 +1,8 @@
 
 /**
  * An operator is a function that receive an Observable and retrun another.
- * @param {Observable} observable
- * @returns {Observable}
+ * @returns {(Observable) => Observable}
  */
-export function operator(observable) {
-  return observable;
+export default function operator() {
+  return (observable) => observable;
 }

@@ -62,6 +62,12 @@ describe('Observable', () => {
     expect(observer.next).not.toBeCalled();
     expect(observer.error).not.toBeCalled();
     expect(observer.completed).not.toBeCalled();
+
+    emitter.error('err');
+
+    expect(observer.next).not.toBeCalled();
+    expect(observer.error).not.toBeCalled();
+    expect(observer.completed).not.toBeCalled();
   });
 
   it('observer doesnt receive next after completed', () => {

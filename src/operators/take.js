@@ -8,14 +8,18 @@ import { Observer } from "../Observer";
  */
 export default function take(numberOfValues) {
   return (observable) => {
+    let count = 0;
     return {
       subscribe: (observer) => {
         const subscription = new Subscription();
         const subscriber = new Subscriber(Observer.merge(observer, {
           next: (value) => {
-            subscription.unsubscribe();
             observer.next(value);
-            observer.completed();
+            if (count == numberOfValues - 1) {
+              subscription.unsubscribe();
+              observer.completed();
+            }
+            count++;
           },
         }), subscription);
         subscription.add(observable.subscribe(subscriber));
